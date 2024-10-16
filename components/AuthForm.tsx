@@ -11,13 +11,11 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
-  
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -35,7 +33,7 @@ const AuthForm = ({ type }: { type: string }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const formSchema = authFormSchema(type);
-
+  console.log("this is user from auth page", user);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
