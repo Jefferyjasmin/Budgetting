@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -24,8 +24,9 @@ import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.actions";
-// import PlaidLink from "./PlaidLink";
+
 import CustomInput from "./CustomInput";
+import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const AuthForm = ({ type }: { type: string }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const formSchema = authFormSchema(type);
-  console.log("this is user from auth page", user);
+ 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,23 +59,32 @@ const AuthForm = ({ type }: { type: string }) => {
           city: data.city!,
           state: data.state!,
           postalCode: data.postalCode!,
-          dateOfBirth: data.dateOfBirth!,
+          dateOfBirth: moment(data.dateOfBirth!).format("YYYY-MM-DD"),
           ssn: data.ssn!,
           email: data.email,
           password: data.password,
         };
-
+        console.log("this is user from onSubmit", userData);
         const newUser = await signUp(userData);
 
         setUser(newUser);
+
+        console.log("this is user from onSubmit", user);
       }
 
       if (type === "sign-in") {
+        console.log(
+          "this is data from authForm sign-in",
+          data.email,
+          data.password,
+          "this is data =>> ",
+          data
+        );
         const response = await signIn({
           email: data.email,
           password: data.password,
         });
-
+        console.log("this is the response", response);
         if (response) router.push("/");
       }
     } catch (error) {
@@ -83,6 +93,7 @@ const AuthForm = ({ type }: { type: string }) => {
       setIsLoading(false);
     }
   };
+  console.log("this is the user we have created", user);
 
   return (
     <section className="auth-form">
@@ -112,7 +123,7 @@ const AuthForm = ({ type }: { type: string }) => {
       </header>
       {user ? (
         <div className="flex flex-col gap-4">
-          {/* <PlaidLink user={user} variant="primary" /> */}
+          <PlaidLink user={user} variant="primary" />
         </div>
       ) : (
         <>

@@ -171,6 +171,7 @@ export function countTransactionCategories(
 }
 
 export function extractCustomerIdFromUrl(url: string) {
+  console.log("this is the socalled url,", url);
   // Split the URL string by '/'
   const parts = url.split("/");
 

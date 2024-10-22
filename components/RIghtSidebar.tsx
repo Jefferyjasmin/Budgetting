@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import BankCard from "./BankCard";
 // import { countTransactionCategories } from '@/lib/utils'
-import Category from "./Category";
+// import Category from "./Category";
 
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
   // const categories: CategoryCount[] = countTransactionCategories(transactions);
@@ -41,7 +41,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
               <BankCard
                 key={banks[0].$id}
                 account={banks[0]}
-                userName={user.name}
+                userName={user?.name}
                 showBalance={false}
               />
             </div>
