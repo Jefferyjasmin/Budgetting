@@ -41,14 +41,7 @@ export const signIn = async ({ email, password }: signInProps) => {
   try {
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
-    console.log(
-      "this is email and password coming thru",
-      session,
-      "email=>>",
-      email,
-      "password",
-      password
-    );
+
     cookies().set("appwrite-session", session.secret, {
       path: "/",
       httpOnly: true,
@@ -124,10 +117,10 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-    // const result = await account.get();
+    const result = await account.get();
 
-    // const user = await getUserInfo({ userId: result.$id });
-    const user = await account.get();
+    const user = await getUserInfo({ userId: result.$id });
+
     return parseStringify(user);
   } catch (error) {
     console.log(error);
@@ -149,6 +142,7 @@ export const logoutAccount = async () => {
 };
 
 export const createLinkToken = async (user: User) => {
+  console.log("this is user being passed  to user.action createTOken", user);
   try {
     const tokenParams = {
       user: {
@@ -272,7 +266,7 @@ export const getBanks = async ({ userId }: getBanksProps) => {
       BANK_COLLECTION_ID!,
       [Query.equal("userId", [userId])]
     );
-
+    console.log("banks information:", banks.documents);
     return parseStringify(banks.documents);
   } catch (error) {
     console.log(error);

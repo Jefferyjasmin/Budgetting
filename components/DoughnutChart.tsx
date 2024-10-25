@@ -6,16 +6,17 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
-   
+  const accountNames = accounts.map((account) => account.name);
+  const balanace = accounts.map((account) => account.currentBalance);
   const data = {
     datasets: [
       {
         Label: "Banks",
-        data: [1250, 2500, 3750],
+        data: balanace,
         backgroundColor: ["#747b6", "#2265d8", "#2f91fa"],
       },
     ],
-    labels: ["Bank 1", "Bank 2", "Bank 3"],
+    labels: accountNames,
   };
   return (
     <Doughnut
@@ -23,10 +24,10 @@ const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
       options={{
         cutout: "60%",
         plugins: {
-          legend:{
+          legend: {
             display: false,
-          }
-        }
+          },
+        },
       }}
     />
   );

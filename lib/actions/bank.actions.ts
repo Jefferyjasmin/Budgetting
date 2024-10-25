@@ -19,6 +19,7 @@ import { getBanks, getBank } from "./user.actions";
 export const getAccounts = async ({ userId }: getAccountsProps) => {
   try {
     // get banks from db
+    console.log("this is userId from getAccounts", userId);
     const banks = await getBanks({ userId });
 
     const accounts = await Promise.all(
@@ -47,7 +48,7 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
           appwriteItemId: bank.$id,
           sharaebleId: bank.shareableId,
         };
-
+        console.log("this is accounts being return from getAccount", account);
         return account;
       })
     );
@@ -115,7 +116,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     };
 
     // sort transactions by date such that the most recent transaction is first
-      const allTransactions = [...transactions, ...transferTransactions].sort(
+    const allTransactions = [...transactions, ...transferTransactions].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 

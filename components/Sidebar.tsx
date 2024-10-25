@@ -29,20 +29,27 @@ const Sidebar = ({ user }: SiderbarProps) => {
             pathname === item.route || pathname.startsWith(`${item.route}/`);
           return (
             <Link
-              className={cn("sidebar-link", { "bg-bank-gradient": isActive })}
+              className={cn("mobilenav-sheet_close w-full", {
+                "bg-bank-gradient": isActive,
+              })}
               href={item.route}
               key={item.label}
             >
-              <div className="relative">
-                <Image
-                  src={item.imgURL}
-                  alt={item.label}
-                  height={23}
-                  width={23}
-                  className={cn({ "brightness-[3] invert-0": isActive })}
-                />
-              </div>
-              <p className={cn("sidebar-label", { "!text-white": isActive })}>
+              <Image
+                src={item.imgURL}
+                alt={item.label}
+                height={20}
+                width={20}
+                className={cn({
+                  "brightness-[3] invert-0": isActive,
+                })}
+              />
+
+              <p
+                className={cn("text-16 font-semibold text-black-2", {
+                  "!text-white": isActive,
+                })}
+              >
                 {item.label}
               </p>
             </Link>
